@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MINICT Smart Intake, Directed Concept & Automated Advisory Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Chart.js for Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- TOP OFFICIAL GOV BANNER -->
+  <div class="rwanda-top-bar">
+    <div class="top-bar-container">
+      <div class="gov-identity">
+        <span class="rw-flag-strip"></span>
+        <span class="gov-text">Republic of Rwanda &bull; Official Government Portal Prototype</span>
+      </div>
+      <div class="official-links">
+        <a href="https://www.minict.gov.rw/" target="_blank" rel="noopener">MINICT Official Website</a>
+        <span class="sep">|</span>
+        <a href="https://innovaterwanda.rw/en" target="_blank" rel="noopener">Innovate Rwanda Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN NAVIGATION HEADER -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="brand-group">
+        <div class="coat-of-arms">
+          <svg viewBox="0 0 64 64" width="48" height="48" fill="none">
+            <circle cx="32" cy="32" r="30" stroke="#003366" stroke-width="2.5" fill="#F4F8FA"/>
+            <path d="M32 10 L38 24 L52 24 L41 33 L45 47 L32 38 L19 47 L23 33 L12 24 L26 24 Z" fill="#E6A117" stroke="#003366" stroke-width="1.2"/>
+            <circle cx="32" cy="32" r="7" fill="#00A3E0"/>
+            <path d="M22 52 Q32 46 42 52" stroke="#20744A" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>MINISTRY OF ICT AND INNOVATION</h1>
+          <p class="subtitle">Smart Support Intake, Directed Concept Vetting & Automated Advisory System</p>
+        </div>
+      </div>
+
+      <nav class="portal-nav">
+        <button class="nav-btn active" id="tab-applicant" onclick="switchTab('applicant')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Applicant & Innovator Portal
+        </button>
+        <button class="nav-btn" id="tab-dashboard" onclick="switchTab('dashboard')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          MINICT Leadership Analytics
+        </button>
+        <button class="nav-btn secondary" onclick="openSopModal()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          SOP & Rationale
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-content">
+
+    <!-- ==================== 1. APPLICANT INTAKE & DIRECTED CONCEPT VIEW ==================== -->
+    <section id="view-applicant" class="portal-view active">
+      
+      <!-- HERO RATIONALE BANNER -->
+      <div class="hero-banner">
+        <div class="hero-content">
+          <div class="badge-tag">STREAMLINED DIGITAL SERVICE</div>
+          <h2>Accelerate Your Partnership & Support Request with MINICT</h2>
+          <p>
+            The Ministry of ICT and Innovation receives numerous applications for <strong>MoUs, Endorsements, Technical Advisory, and Pilot Facilitation</strong>.
+            To eliminate delays and unrecorded requests, this portal provides an <strong>automated concept diagnostic</strong>. It verifies foundational structural readiness (IP/Patent registration, Data Protection, and Line Ministry alignment) so you receive immediate, actionable guidance before in-person review.
+          </p>
+          <div class="hero-highlights">
+            <div class="highlight-item">
+              <span class="icon">&#10003;</span>
+              <span><strong>Instant Gap Analysis:</strong> Identify missing IP, regulatory clearances, or privacy compliance.</span>
+            </div>
+            <div class="highlight-item">
+              <span class="icon">&#10003;</span>
+              <span><strong>Smart Line Ministry Routing:</strong> Automated referral to MoH, MINEDUC, BNR, or RURA.</span>
+            </div>
+            <div class="highlight-item">
+              <span class="icon">&#10003;</span>
+              <span><strong>100% Tracked:</strong> Guaranteed tracking reference for MINICT technical follow-up.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTAKE & DIRECTED CONCEPT FORM -->
+      <div class="form-wrapper">
+        <form id="intake-form" onsubmit="handleFormSubmit(event)">
+          
+          <!-- STEP 1: APPLICANT PROFILE -->
+          <div class="form-card">
+            <div class="card-header">
+              <span class="step-badge">Step 1</span>
+              <h3>Applicant & Organization Profile</h3>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="applicant_name">Full Name <span class="req">*</span></label>
+                <input type="text" id="applicant_name" required placeholder="e.g. Victor Muvunyi">
+              </div>
+              <div class="form-group">
+                <label for="organization_name">Organization / Startup / Entity Name <span class="req">*</span></label>
+                <input type="text" id="organization_name" required placeholder="e.g. HealthBridge Telemedicine Ltd">
+              </div>
+              <div class="form-group">
+                <label for="entity_type">Entity Type <span class="req">*</span></label>
+                <select id="entity_type" required>
+                  <option value="">-- Select Entity Type --</option>
+                  <option value="Registered Tech Startup">Registered Tech Startup</option>
+                  <option value="Individual Innovator">Individual Innovator / Early Founder</option>
+                  <option value="Academic / Research Institution">Academic / Research Institution (UR, etc.)</option>
+                  <option value="SME / Tech Enterprise">SME / Established Enterprise</option>
+                  <option value="Non-Governmental Organization (NGO)">Non-Governmental Organization (NGO)</option>
+                  <option value="Development Partner / International Entity">Development Partner / International Entity</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="email">Official Email Address <span class="req">*</span></label>
+                <input type="email" id="email" required placeholder="name@organization.rw">
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number (WhatsApp preferred) <span class="req">*</span></label>
+                <input type="tel" id="phone" required placeholder="+250 788 000 000">
+              </div>
+              <div class="form-group">
+                <label for="district">District of Primary Operation <span class="req">*</span></label>
+                <select id="district" required>
+                  <option value="">-- Select District in Rwanda --</option>
+                  <option value="Gasabo (Kigali)">Gasabo (Kigali)</option>
+                  <option value="Kicukiro (Kigali)">Kicukiro (Kigali)</option>
+                  <option value="Nyarugenge (Kigali)">Nyarugenge (Kigali)</option>
+                  <option value="Musanze (Northern)">Musanze (Northern)</option>
+                  <option value="Rubavu (Western)">Rubavu (Western)</option>
+                  <option value="Huye (Southern)">Huye (Southern)</option>
+                  <option value="Rwamagana (Eastern)">Rwamagana (Eastern)</option>
+                  <option value="Other District (Nationwide)">Other District (Nationwide)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="has_business_registration">Is your entity officially registered with RDB? <span class="req">*</span></label>
+                <select id="has_business_registration" required onchange="toggleTinField()">
+                  <option value="">-- Select --</option>
+                  <option value="Yes">Yes, Registered with RDB</option>
+                  <option value="No">No, Unregistered / Pre-incorporation</option>
+                </select>
+              </div>
+              <div class="form-group" id="tin-group" style="display:none;">
+                <label for="tin_number">RDB Registration / TIN Number</label>
+                <input type="text" id="tin_number" placeholder="9-digit TIN number">
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: SUPPORT REQUESTED -->
+          <div class="form-card">
+            <div class="card-header">
+              <span class="step-badge">Step 2</span>
+              <h3>Support Requested from MINICT</h3>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label for="support_type">Primary Category of Engagement Requested <span class="req">*</span></label>
+                <select id="support_type" required>
+                  <option value="">-- Select Requested Support --</option>
+                  <option value="Memorandum of Understanding (MoU)">Memorandum of Understanding (MoU) for Strategic Partnership</option>
+                  <option value="Letter of Endorsement / Support">Official Letter of Endorsement / Support (for Grants, Global Competitions)</option>
+                  <option value="Technical Advisory & Architecture Review">Technical Advisory, Architecture & AI Consultation</option>
+                  <option value="Sandbox Testing / Regulatory Navigation">Sandbox Testing, eKash Switch Access & Regulatory Navigation</option>
+                  <option value="Public Sector Pilot Deployment">Public Sector Pilot Deployment Facilitation (GovTech)</option>
+                  <option value="Investor / Ecosystem Matchmaking">Investor & Ecosystem Partner Matchmaking (Innovate Rwanda)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3: DIRECTED CONCEPT NOTE -->
+          <div class="form-card">
+            <div class="card-header">
+              <span class="step-badge">Step 3</span>
+              <h3>Directed Concept Note (Technical Formulation)</h3>
+            </div>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label for="project_title">Project / Innovation Title <span class="req">*</span></label>
+                <input type="text" id="project_title" required placeholder="e.g. AI-Powered Kinyarwanda Clinical Triage & WhatsApp Health Navigator">
+              </div>
+              <div class="form-group">
+                <label for="sector">Primary Sector Vertical <span class="req">*</span></label>
+                <select id="sector" required onchange="updateSectorGuidance()">
+                  <option value="">-- Select Sector --</option>
+                  <option value="HealthTech">HealthTech (Digital Health, Clinical, Telemedicine)</option>
+                  <option value="EdTech">EdTech (E-Learning, School Portals, Educational Content)</option>
+                  <option value="FinTech">FinTech (Payments, Lending, Digital Wallets, Switches)</option>
+                  <option value="AgriTech">AgriTech (Precision Farming, Cooperatives, Soil IoT)</option>
+                  <option value="GovTech & Public Services">GovTech & Public Service Automation (Irembo-adjacent)</option>
+                  <option value="AI & Language Tech">AI, NLP, Kinyarwanda LLMs & Speech Tech</option>
+                  <option value="CleanTech, IoT & Smart Cities">CleanTech, IoT, Energy & Smart Infrastructure</option>
+                  <option value="Other Emerging Tech">Other Emerging Technologies (Blockchain, XR/VR)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="project_stage">Current Project Maturity Stage <span class="req">*</span></label>
+                <select id="project_stage" required>
+                  <option value="">-- Select Stage --</option>
+                  <option value="Concept/Idea">Concept / Idea Stage (No functional software yet)</option>
+                  <option value="Prototype/MVP">Working Prototype / Minimum Viable Product (MVP)</option>
+                  <option value="Pilot Testing">Pilot Testing (Active trial with users/institutions)</option>
+                  <option value="Live in Market">Live in Market (Commercial operations, active revenue/users)</option>
+                </select>
+              </div>
+              <div class="form-group full-width">
+                <label for="target_beneficiary">Target Beneficiaries & User Group <span class="req">*</span></label>
+                <input type="text" id="target_beneficiary" required placeholder="e.g. Rural health post nurses, community health workers, and citizen patients">
+              </div>
+              <div class="form-group full-width">
+                <label for="problem_statement">Structured Problem Statement <span class="req">*</span></label>
+                <textarea id="problem_statement" rows="3" required placeholder="Clearly state the specific operational friction, gap, or challenge your innovation solves in Rwanda..."></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label for="proposed_solution">Proposed Solution & Core Features <span class="req">*</span></label>
+                <textarea id="proposed_solution" rows="3" required placeholder="Describe how your technology addresses the problem, customer journey, and operational mechanics..."></textarea>
+              </div>
+              <div class="form-group full-width">
+                <label for="tech_stack">Technology Architecture & Infrastructure Stack <span class="req">*</span></label>
+                <input type="text" id="tech_stack" required placeholder="e.g. Python, FastAPI, Gemini API / Fine-tuned LLM, PostgreSQL, Rwanda Local Cloud Zone / GovCloud">
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4: STRUCTURAL READINESS & GAP IDENTIFICATION CHECKLIST -->
+          <div class="form-card highlight-border">
+            <div class="card-header">
+              <span class="step-badge green">Step 4</span>
+              <h3>Structural Dimensions & Regulatory Readiness Checklist</h3>
+              <p class="section-desc">These 4 dimensions are the most frequent causes of delayed or rejected applications at MINICT. Answering accurately enables automated pre-clearance advice.</p>
+            </div>
+
+            <!-- Dimension 1: IP & Patent -->
+            <div class="dimension-block">
+              <div class="dimension-info">
+                <h4>1. Intellectual Property (IP) & Patent Protection</h4>
+                <p>Has your software architecture, algorithm, trademark, or hardware design been registered with the <strong>Rwanda Development Board (RDB) Intellectual Property Division</strong>?</p>
+              </div>
+              <div class="dimension-control">
+                <select id="has_ip_patent" required>
+                  <option value="">-- Select IP Status --</option>
+                  <option value="Yes">Yes &bull; Registered copyright, trademark, or patent with RDB</option>
+                  <option value="In Progress">In Progress &bull; Application submitted to RDB IP Office</option>
+                  <option value="No">No &bull; Not registered yet (Unprotected)</option>
+                </select>
+                <input type="text" id="ip_details" placeholder="IP registration number or filing details (if applicable)">
+              </div>
+            </div>
+
+            <!-- Dimension 2: Data Protection Law No 058/2021 -->
+            <div class="dimension-block">
+              <div class="dimension-info">
+                <h4>2. Data Protection & Privacy Compliance (Law N° 058/2021)</h4>
+                <p>Does your application handle, store, or process Rwandan citizens' personal, financial, or biometric data? Have you registered as a Data Controller/Processor with the <strong>National Cyber Security Authority (NCSA) Data Protection & Privacy Office (DPPO)</strong>?</p>
+              </div>
+              <div class="dimension-control">
+                <select id="has_data_protection" required>
+                  <option value="">-- Select Data Protection Status --</option>
+                  <option value="Yes">Yes &bull; Registered Data Controller/Processor with NCSA</option>
+                  <option value="In Progress">In Progress &bull; Compliance audit underway / Submitted to NCSA</option>
+                  <option value="No">No &bull; Not registered yet</option>
+                  <option value="Not Applicable">Not Applicable &bull; System processes strictly non-personal telemetry</option>
+                </select>
+                <input type="text" id="dp_details" placeholder="NCSA certificate number or compliance status note">
+              </div>
+            </div>
+
+            <!-- Dimension 3: Line Ministry / Sector Regulator Alignment -->
+            <div class="dimension-block">
+              <div class="dimension-info">
+                <h4>3. Sectoral Line Ministry / Regulatory Clearance</h4>
+                <p>Domain-specific technologies (e.g., Health, Education, FinTech, Telecom) require endorsement or clinical/regulatory sandbox entry from the relevant line institution before MINICT can execute an MoU.</p>
+              </div>
+              <div class="dimension-control">
+                <select id="has_line_ministry_clearance" required>
+                  <option value="">-- Select Line Clearance Status --</option>
+                  <option value="Yes">Yes &bull; Officially endorsed or cleared by Line Ministry / Agency</option>
+                  <option value="In Progress">In Progress &bull; Active pilot or dialogue with Line Ministry</option>
+                  <option value="No">No &bull; Direct approach to MINICT without Line Ministry engagement</option>
+                </select>
+                <input type="text" id="line_ministry_name" placeholder="Name of Line Ministry/Agency (e.g., MoH, REB, BNR, RURA)">
+              </div>
+            </div>
+
+            <!-- Dimension 4: Sovereign Data Hosting & Cloud Readiness -->
+            <div class="dimension-block">
+              <div class="dimension-info">
+                <h4>4. Cloud Hosting & Sovereign Data Residency</h4>
+                <p>Does your solution comply with national data sovereignty principles, with capability to host data in Rwanda (AOS GovCloud, local private cloud, or certified local cloud providers)?</p>
+              </div>
+              <div class="dimension-control">
+                <select id="hosting_readiness" required>
+                  <option value="Yes">Yes &bull; Architecture is ready for local Rwanda GovCloud / local zone hosting</option>
+                  <option value="In Progress">In Progress &bull; Currently adapting architecture for local residency</option>
+                  <option value="No">No &bull; Hosted entirely on foreign public cloud without local backup</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- FORM ACTIONS -->
+          <div class="form-actions">
+            <button type="button" class="btn-diagnostic" onclick="runLiveDiagnostic()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+              Run Instant Concept Diagnostic & Advisory
+            </button>
+            <button type="submit" class="btn-submit">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Submit Application to MINICT Register
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- LIVE DIAGNOSTIC & SMART ADVISORY MODAL / RESULTS PANEL -->
+      <div id="diagnostic-panel" class="diagnostic-panel" style="display:none;">
+        <div class="diagnostic-card">
+          <div class="diagnostic-header">
+            <div class="diag-title">
+              <span class="diag-emblem">&#9881;</span>
+              <div>
+                <h3>MINICT Concept Diagnostic & Smart Advisory Clearance</h3>
+                <p id="diag-app-title">Automated Structural Evaluation for: <span>Project Title</span></p>
+              </div>
+            </div>
+            <button class="btn-close-diag" onclick="closeDiagnostic()">Close</button>
+          </div>
+
+          <div class="diagnostic-body">
+            
+            <!-- Score Meter -->
+            <div class="score-card">
+              <div class="score-dial">
+                <div class="score-value" id="score-val">75%</div>
+                <div class="score-label">Readiness Score</div>
+              </div>
+              <div class="score-details">
+                <h4 id="score-status-text">Ready for Technical Review</h4>
+                <p id="score-explanation">Your concept meets the critical baseline requirements for technical engagement at MINICT.</p>
+                <div class="score-progress-bar">
+                  <div class="bar-fill" id="score-bar" style="width: 75%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Identified Structural Gaps -->
+            <div class="diag-section">
+              <h4><span class="icon-gap">&#9888;</span> Identified Structural Gaps (Must Address):</h4>
+              <ul class="gaps-list" id="diag-gaps-list">
+                <!-- Injected via JS -->
+              </ul>
+            </div>
+
+            <!-- Smart Strategic Advisories & Next Steps -->
+            <div class="diag-section">
+              <h4><span class="icon-adv">&#128161;</span> Smart Advisory & Recommended Action Plan:</h4>
+              <ul class="advisories-list" id="diag-advisories-list">
+                <!-- Injected via JS -->
+              </ul>
+            </div>
+
+            <!-- Line Ministry Direct Routing -->
+            <div class="routing-box">
+              <div class="routing-icon">&#128737;</div>
+              <div class="routing-text">
+                <strong>Recommended Institutional Routing:</strong>
+                <span id="diag-routing">Ministry of Health (MoH) & Rwanda Biomedical Centre</span>
+                <p>Before executing an MoU with MINICT, domain validation must occur through the sector lead agency.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="diagnostic-footer">
+            <button class="btn-print" onclick="window.print()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              Print / Save Advisory Clearance PDF
+            </button>
+            <button class="btn-confirm-submit" onclick="submitDirectlyFromDiag()">
+              Confirm & Submit to MINICT
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== 2. MINICT LEADERSHIP & POLICY ANALYTICS DASHBOARD ==================== -->
+    <section id="view-dashboard" class="portal-view">
+      
+      <!-- DASHBOARD HEADER -->
+      <div class="dash-hero">
+        <div class="dash-hero-info">
+          <h2>MINICT Innovator Intake & Ecosystem Intelligence Dashboard</h2>
+          <p>Executive overview for the <strong>Permanent Secretary</strong> and Technical Division. Monitors incoming requests, measures ecosystem structural gaps (IP, Privacy, Line Approvals), and guides targeted national training interventions.</p>
+        </div>
+        <div class="dash-hero-actions">
+          <button class="btn-export" onclick="exportDataCsv()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export All Records (.CSV)
+          </button>
+          <button class="btn-refresh" onclick="loadDashboardData()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            Refresh Data
+          </button>
+        </div>
+      </div>
+
+      <!-- KEY PERFORMANCE METRICS (KPIs) -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon blue">&#128203;</div>
+          <div class="kpi-content">
+            <span class="kpi-label">Total Logged Applications</span>
+            <span class="kpi-num" id="kpi-total">--</span>
+            <span class="kpi-sub">Centralized intake</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon green">&#9989;</div>
+          <div class="kpi-content">
+            <span class="kpi-label">High Readiness (MoU Candidate)</span>
+            <span class="kpi-num" id="kpi-ready">--</span>
+            <span class="kpi-sub">Readiness Score &ge; 70%</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon orange">&#128260;</div>
+          <div class="kpi-content">
+            <span class="kpi-label">Advised (Bridging Gaps)</span>
+            <span class="kpi-num" id="kpi-advised">--</span>
+            <span class="kpi-sub">Pending IP / DPPO / MVP</span>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon purple">&#128506;</div>
+          <div class="kpi-content">
+            <span class="kpi-label">Referred to Line Ministries</span>
+            <span class="kpi-num" id="kpi-referred">--</span>
+            <span class="kpi-sub">MoH, MINEDUC, BNR</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANALYTICS CHARTS SECTION -->
+      <div class="charts-grid">
+        <!-- Chart 1: Sector Distribution -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Where Rwandan Innovators Are Picking Interest (Sectoral Density)</h3>
+            <span class="chart-tag">Ecosystem Trends</span>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="sectorChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: Gaps Diagnostic Matrix -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Ecosystem Structural Gaps Diagnostic (% Lacking Dimensions)</h3>
+            <span class="chart-tag red">Target for Policy & Training</span>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="gapsChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- STRATEGIC POLICY TAKEAWAYS FOR LEADERSHIP -->
+      <div class="policy-card">
+        <div class="policy-header">
+          <div class="policy-title">
+            <span class="policy-bulb">&#128161;</span>
+            <h4>Strategic Policy Insights for MINICT Leadership & Permanent Secretary</h4>
+          </div>
+          <span class="policy-date">Dynamic Synthesis &bull; FY 2026/2027</span>
+        </div>
+        <div class="policy-body" id="policy-insights-content">
+          <div class="insight-row">
+            <span class="badge-rec">Policy Priority 1</span>
+            <p><strong>National IP for Innovators Campaign:</strong> Over <strong>60% of applicants</strong> reach MINICT without software copyright or patent filings with RDB. MINICT should organize quarterly IP Acceleration Clinics in collaboration with the RDB IP Office to safeguard Rwandan intellectual property before scaling.</p>
+          </div>
+          <div class="insight-row">
+            <span class="badge-rec">Policy Priority 2</span>
+            <p><strong>Data Protection Fast-Track:</strong> Startups report hesitation with the NCSA Data Protection Office compliance steps. Establishing a streamlined "Startup Data Protection Sandbox" will lower compliance friction for AI and health innovators.</p>
+          </div>
+          <div class="insight-row">
+            <span class="badge-rec">Policy Priority 3</span>
+            <p><strong>Inter-Ministerial Innovation Triaging:</strong> High volumes of HealthTech and EdTech apps approach MINICT for MoUs prematurely. Establishing automated API bridges with MoH and REB ensures technical clearance is verified before Ministry meetings.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTRAL APPLICATIONS TABLE -->
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">
+            <h3>Central Registry of Incoming Applications</h3>
+            <p>Search, filter, and inspect detailed concept notes and assigned technical officers.</p>
+          </div>
+          <div class="table-filters">
+            <input type="text" id="table-search" placeholder="Search applicant, project or ref..." oninput="filterTable()">
+            <select id="filter-sector" onchange="filterTable()">
+              <option value="">All Sectors</option>
+              <option value="HealthTech">HealthTech</option>
+              <option value="EdTech">EdTech</option>
+              <option value="FinTech">FinTech</option>
+              <option value="AgriTech">AgriTech</option>
+              <option value="AI & Language Tech">AI & Language Tech</option>
+            </select>
+            <select id="filter-status" onchange="filterTable()">
+              <option value="">All Statuses</option>
+              <option value="Ready for Technical Review">Ready for Technical Review</option>
+              <option value="Advised - Pending Prerequisites">Advised - Pending Prerequisites</option>
+              <option value="Referred to Line Ministry">Referred to Line Ministry</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table" id="applications-table">
+            <thead>
+              <tr>
+                <th>Ref No.</th>
+                <th>Date</th>
+                <th>Applicant / Organization</th>
+                <th>Sector</th>
+                <th>Support Requested</th>
+                <th>Readiness</th>
+                <th>Status</th>
+                <th>Assigned Officer</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="applications-tbody">
+              <!-- Injected via app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- DETAIL MODAL FOR RECORD INSPECTION -->
+  <div id="detail-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 id="modal-ref-title">Application Details</h3>
+          <p id="modal-org-subtitle">Organization Name</p>
+        </div>
+        <button class="btn-close-modal" onclick="closeDetailModal()">&times;</button>
+      </div>
+
+      <div class="modal-body" id="modal-content">
+        <!-- Injected via app.js -->
+      </div>
+
+      <div class="modal-footer">
+        <div class="status-updater">
+          <label>Update Status:</label>
+          <select id="modal-status-select">
+            <option value="Advised - Pending Prerequisites">Advised - Pending Prerequisites</option>
+            <option value="Ready for Technical Review">Ready for Technical Review</option>
+            <option value="Referred to Line Ministry">Referred to Line Ministry</option>
+            <option value="Escalated to Permanent Secretary">Escalated to Permanent Secretary</option>
+            <option value="MoU In Drafting">MoU In Drafting</option>
+          </select>
+          <button class="btn-update-status" onclick="saveStatusUpdate()">Save Status</button>
+        </div>
+        <button class="btn-secondary" onclick="closeDetailModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOP & RATIONALE MODAL -->
+  <div id="sop-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-card wide">
+      <div class="modal-header">
+        <div>
+          <h3>Standard Operating Procedure (SOP) & Technical Rationale</h3>
+          <p>Prepared for the Permanent Secretary, Ministry of ICT and Innovation</p>
+        </div>
+        <button class="btn-close-modal" onclick="closeSopModal()">&times;</button>
+      </div>
+      <div class="modal-body sop-body">
+        <h4>1. Background & Rationale</h4>
+        <p>Currently, the Ministry of ICT & Innovation receives numerous ad-hoc requests for MoUs, support letters, and partnerships via email, letters, and physical visits. Many applicants lack basic prerequisites (e.g., Intellectual Property protection, business registration, or data privacy compliance). Assigning unvetted requests to technical staff is inefficient and leaves requests unrecorded.</p>
+        
+        <h4>2. The Solution: Directed Intake & Smart Automated Advisory</h4>
+        <p>This portal acts as an intelligent gatekeeper. By requiring applicants to submit a structured Directed Concept Note, the system automatically evaluates foundational readiness and issues an immediate Diagnostic Report. Innovators are guided to fix gaps (such as registering with RDB IP or NCSA Data Protection) before scheduling in-person meetings with Ministry officials.</p>
+        
+        <h4>3. Line Ministry Routing Workflow</h4>
+        <ul>
+          <li><strong>HealthTech:</strong> Routed to Ministry of Health (MoH) & RBC digital health working group.</li>
+          <li><strong>EdTech:</strong> Routed to Rwanda Basic Education Board (REB) for curriculum vetting.</li>
+          <li><strong>FinTech:</strong> Routed to National Bank of Rwanda (BNR) Regulatory Sandbox & RSwitch.</li>
+          <li><strong>Telecom/IoT:</strong> Routed to Rwanda Utilities Regulatory Authority (RURA).</li>
+        </ul>
+
+        <h4>4. Integration Architecture</h4>
+        <p>Designed for turnkey integration with <code>https://www.minict.gov.rw/</code> and <code>https://innovaterwanda.rw/en</code> as an embedded microservice, iframe, or standalone government portal running on Rwanda GovCloud (AOS).</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeSopModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Ministry of ICT and Innovation (MINICT), Republic of Rwanda. All rights reserved.</p>
+      <p class="footer-sub">Standard Operating Procedures & Automated Intake System &bull; Inquiries: <a href="mailto:info@minict.gov.rw">info@minict.gov.rw</a></p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

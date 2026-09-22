@@ -16,7 +16,7 @@ import urllib.parse
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from datetime import datetime
 
-PORT = 8080
+PORT = int(os.environ.get("PORT", 8080))
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, 'data', 'applications.db')
 

@@ -1,3 +1,23 @@
 __pycache__/
 *.py[cod]
 *.log
+# Database (local test data — never commit)
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment variables
+.env
+.env.local

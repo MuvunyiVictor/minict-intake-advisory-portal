@@ -3,7 +3,7 @@ title Push MINICT Portal to GitHub
 cls
 echo ====================================================================
 echo   Pushing MINICT Smart Support Intake Portal to GitHub
-echo   Repository: https://github.com/VictorMuv/minict-intake-advisory-portal.git
+echo   Repository: https://github.com/MuvunyiVictor/minict-intake-advisory-portal.git
 echo ====================================================================
 echo.
 echo Make sure you have created an empty repository on GitHub named:
